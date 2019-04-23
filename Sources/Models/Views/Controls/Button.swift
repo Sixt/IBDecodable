@@ -45,13 +45,15 @@ public struct Button: IBDecodable, ViewProtocol, IBIdentifiable {
         public let key: String?
         public let title: String
         public let color: Color?
+        public let image: String?
 
         static func decode(_ xml: XMLIndexerType) throws -> Button.State {
             let container = xml.container(keys: CodingKeys.self)
             return State.init(
                 key:   try container.attribute(of: .key),
                 title: try container.attribute(of: .title),
-                color: container.elementIfPresent(of: .color)
+                color: container.elementIfPresent(of: .color),
+                image: container.attributeIfPresent(of: .image)
             )
         }
     }

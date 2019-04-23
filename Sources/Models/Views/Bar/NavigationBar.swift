@@ -47,6 +47,26 @@ public struct NavigationBar: IBDecodable, ViewProtocol, IBIdentifiable {
         public let customModuleProvider: String?
         public let userLabel: String?
         public let colorLabel: String?
+        public let barButtonItem: [BarButtonItem]?
+
+        public struct BarButtonItem: IBDecodable {
+            public let id: String
+            public let style: String?
+            public let systemItem: String?
+            public let title: String?
+            public let image: String?
+
+            static func decode(_ xml: XMLIndexerType) throws -> BarButtonItem {
+                let container = xml.container(keys: CodingKeys.self)
+                return BarButtonItem(
+                    id:         try container.attribute(of: .id),
+                    style:      container.attributeIfPresent(of: .style),
+                    systemItem: container.attributeIfPresent(of: .systemItem),
+                    title:      container.attributeIfPresent(of: .title),
+                    image:      container.attributeIfPresent(of: .image)
+                )
+            }
+        }
 
         static func decode(_ xml: XMLIndexerType) throws -> NavigationBar.NavigationItem {
             let container = xml.container(keys: CodingKeys.self)
@@ -60,7 +80,8 @@ public struct NavigationBar: IBDecodable, ViewProtocol, IBIdentifiable {
                 customModule: container.attributeIfPresent(of: .customModule),
                 customModuleProvider: container.attributeIfPresent(of: .customModuleProvider),
                 userLabel:  container.attributeIfPresent(of: .userLabel),
-                colorLabel: container.attributeIfPresent(of: .colorLabel)
+                colorLabel: container.attributeIfPresent(of: .colorLabel),
+                barButtonItem: container.elementsIfPresent(of: .barButtonItem)
             )
         }
     }
