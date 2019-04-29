@@ -43,7 +43,7 @@ public struct Button: IBDecodable, ViewProtocol, IBIdentifiable {
 
     public struct State: IBDecodable, IBKeyable {
         public let key: String?
-        public let title: String
+        public let title: String?
         public let color: Color?
         public let image: String?
 
