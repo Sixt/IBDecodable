@@ -51,7 +51,7 @@ public struct Button: IBDecodable, ViewProtocol, IBIdentifiable {
             let container = xml.container(keys: CodingKeys.self)
             return State.init(
                 key:   try container.attribute(of: .key),
-                title: try container.attribute(of: .title),
+                title: container.attributeIfPresent(of: .title),
                 color: container.elementIfPresent(of: .color),
                 image: container.attributeIfPresent(of: .image)
             )
